@@ -1,3 +1,8 @@
+/* ボタンのダブルタップによる画面拡大を防ぐ */
+button {
+  touch-action: manipulation;
+}
+
 /* 全体の基本的なリセット */
 * {
   box-sizing: border-box;
