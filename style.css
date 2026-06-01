@@ -392,7 +392,7 @@ body {
   align-items: center;         /* 縦方向の中央で揃える */
   gap: 10px;                   /* テキストとボタンの間に少し隙間を作る */
   
-  font-size: 14px;
+  font-size: 12px;
   color: #666;
   line-height: 1.6;
   font-family: monospace;
