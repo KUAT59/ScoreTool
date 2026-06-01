@@ -21,7 +21,7 @@ body {
 .app-container {
   width: 100%;
   max-width: 450px;
-  height: 100vh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
