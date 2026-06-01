@@ -25,6 +25,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
+  zoom: 0.85;
 }
 
 /* スコアボード部分 */
