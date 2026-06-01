@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArchelyScoreTool</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-container">
+    
+    <div id="top-screen" class="screen">
+      <div class="top-header">
+        <h2>スコア履歴</h2>
+        <button id="btn-new-record" class="btn-new">＋ 新しく記録する</button>
+      </div>
+      <div id="record-list" class="record-list">
+        </div>
+    </div>
+
+    <div id="input-screen" class="screen hidden">
+      <div class="tab-section">
+        <button class="tab active">前半</button>
+        <button class="tab">後半</button>
+      </div>
+
+      <div class="settings-section">
+        <label for="distance">距離：</label>
+        <select id="distance" class="distance-select">
+          <option value="18m">18m</option>
+          <option value="30m" selected>30m</option>
+          <option value="50m">50m</option>
+          <option value="70m">70m</option>
+          <option value="90m">90m</option>
+        </select>
+      </div>
+
+      <div class="score-section">
+        <table class="score-table">
+          <thead>
+            <tr>
+              <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th class="border-thick">6</th><th>計</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td></td><td></td><td></td><td></td><td></td><td class="border-thick"></td><td class="total"></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td class="border-thick"></td><td class="total"></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td class="border-thick"></td><td class="total"></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td class="border-thick"></td><td class="total"></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td class="border-thick"></td><td class="total"></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td class="border-thick"></td><td class="total"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="action-section">
+        <button class="action-btn btn-save">保存</button>
+        <div class="current-total-display">
+          <span class="total-label">Grand Total</span>
+          <br>
+          <span id="grand-total" class="total-score"></span>
+        </div>
+        <button class="action-btn btn-undo">取消</button>
+      </div>
+
+      <div class="keypad-section">
+        <button class="key key-yellow">X</button>
+        <button class="key key-yellow">10</button>
+        <button class="key key-yellow">9</button>
+        <button class="key key-red">8</button>
+        <button class="key key-red">7</button>
+        <button class="key key-blue">6</button>
+        <button class="key key-blue">5</button>
+        <button class="key key-black">4</button>
+        <button class="key key-black">3</button>
+        <button class="key key-white">2</button>
+        <button class="key key-white">1</button>
+        <button class="key">M</button>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
