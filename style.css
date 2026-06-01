@@ -449,21 +449,42 @@ body {
   width: 36px;
   height: 36px;
   background-color: #ea4335; /* 警告を意味する赤色 */
-  color: #ffffff;
-  font-size: 50px;
-  line-height: 1;
   border: none;
   border-radius: 6px;
+  position: relative; /* バツアイコンの基準位置にする */
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  
-  /* ×マークをボタンのど真ん中に配置 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-shrink: 0;
 }
 
 .btn-delete-record:active {
   transform: translateY(2px);
   box-shadow: 0 0 2px rgba(0,0,0,0.15);
+}
+
+/* CSSで白のバツアイコンを描画する */
+.btn-delete-record::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 1px;
+  /* 中心を揃えた上で、右上がりに45度回転 */
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.btn-delete-record::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 1px;
+  /* 中心を揃えた上で、右下がりに45度回転 */
+  transform: translate(-50%, -50%) rotate(-45deg);
 }

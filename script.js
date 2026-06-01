@@ -76,7 +76,7 @@ savedRecords.forEach((record, index) => {
         </div>
         <div class="record-buttons">
           <button class="btn-export-sheet" title="スプレッドシートへコピー" onclick="copyToClipboard(${index})"></button>
-          <button class="btn-delete-record" title="記録を削除" onclick="deleteRecord(${index})">×</button>
+          <button class="btn-delete-record" title="記録を削除" onclick="deleteRecord(${index})"></button>
         </div>
       </div>
     `;
