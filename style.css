@@ -21,18 +21,18 @@ body {
 .app-container {
   width: 100%;
   max-width: 450px;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-  zoom: 0.85;
+
 }
 
 /* スコアボード部分 */
 .score-section {
   flex: 1; /* 画面上部の余った高さをすべて占有 */
   overflow-y: auto;
-  padding: 15px;
+  padding: 12px;
 }
 
 .score-table {
@@ -43,24 +43,23 @@ body {
 }
 
 .score-table th, .score-table td {
-  border: 1px solid #333; /* イラスト風のくっきりした線 */
-  padding: 12px 2px;
+  border: 1px solid #333; /* くっきりした線 */
+  padding: 2px 2px;
   font-size: 20px;
-  height: 50px;
 }
 
 .score-table th {
   background-color: #e9ecef;
 }
 
-/* 6射目と合計の間の線を太くする（イラストの再現） */
+/* 6射目と合計の間の線を太くする */
 .score-table .border-thick {
   border-right: 3px solid #333;
 }
 
 .score-table td.total {
   font-weight: bold;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 /* アクションボタン部分 */
@@ -68,31 +67,37 @@ body {
   display: flex;
   justify-content: space-between; /* 左右に離して配置 */
   align-items: center;
-  padding: 0 28px 12px 28px; /* 上の余白は詰め、左右下に余白をとる */
+  padding: 0 30px 8px 30px; /* 上の余白は詰め、左右下に余白をとる */
   background-color: #ffffff;
+  margin-top: 4px;
 }
 
 /* 中央の合計得点表示 */
 .current-total-display {
-  text-align: center;
+  display: flex;
+  flex-direction: column; /* 要素を縦並びにする */
+  align-items: center;    /* 中央揃えにする */
 }
 
 .total-label {
-  font-size: 18px;
+  font-size: 16px;
   color: #666;
-  margin-right: 4px;
+  margin-right: 3px;
+  line-height: 1;
 }
 
 .total-score {
-  font-size: 56px; /* 大きく目立たせる */
+  font-size: 42px; /* 大きく目立たせる */
   font-weight: bold;
   color: #333;
+  line-height: 1;
+  margin-top: 3px;
 }
 
 /* アクションボタンの共通デザイン */
 .action-btn {
-  padding: 12px 24px;
-  font-size: 32px;
+  padding: 10px 24px;
+  font-size: 24px;
   font-weight: bold;
   border: none;
   border-radius: 6px;
@@ -121,8 +126,8 @@ body {
 .keypad-section {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3列に均等割り */
-  gap: 15px; /* ボタン同士の隙間 */
-  padding: 20px;
+  gap: 12px; /* ボタン同士の隙間 */
+  padding: 8px 20px 12px 20px;
   background-color: #f8f9fa;
   border-top: 2px solid #ccc;
 }
@@ -133,7 +138,7 @@ body {
   border: 2px solid #505050; /* イラストのような四角い枠 */
   border-radius: 8px; /* 少しだけ角を丸くして押しやすく */
   font-size: 28px;
-  padding: 20px 0;
+  padding: 14px 0;
   cursor: pointer;
   /* 押せるボタンっぽさを出すための影 */
   box-shadow: 0 4px #505050;
@@ -227,7 +232,7 @@ body {
 
 .tab {
   flex: 1; /* 2つのタブを均等な幅にする */
-  padding: 12px 0;
+  padding: 10px 0;
   font-size: 18px;
   border: none;
   background-color: transparent;
@@ -246,7 +251,7 @@ body {
 
 /* 距離選択（設定）部分 */
 .settings-section {
-  padding: 10px 15px;
+  padding: 7px 15px;
   background-color: #ffffff;
   display: flex;
   align-items: center;
@@ -267,11 +272,11 @@ body {
   cursor: pointer;
 }
 
-/* スコアボード部分 (前回のコードから高さ調整のため一部修正) */
+/* スコアボード部分(修正) */
 .score-section {
   flex: 1;
   overflow-y: auto;
-  padding: 5px 15px 15px 15px; /* 上の余白を少し詰める */
+  padding: 2px 15px 10px 15px; /* 上の余白を少し詰める */
 }
 
 .score-table {
@@ -285,7 +290,8 @@ body {
   border: 1px solid #333;
   padding: 2px; /* スマホ画面に6行収めるためにpaddingを減らす */
   font-size: 20px;
-  height: 45px; /* 6行綺麗に収まるように高さを少し微調整 */
+  line-height: 1;
+  height: 36px; /* 高さを少し微調整 */
 }
 
 /* 画面切り替えのベース */
