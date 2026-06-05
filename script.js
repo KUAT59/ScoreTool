@@ -62,8 +62,6 @@ savedRecords.forEach((record, index) => {
     const frontEndsText = formatEndTotals(record.scores ? record.scores[0] : null);
     const backEndsText = formatEndTotals(record.scores ? record.scores[1] : null);
 
-    // ボタンに onclick="copyToClipboard(${index})" を追加します
-// ボタンに onclick="copyToClipboard(${index})" と onclick="deleteRecord(${index})" を追加します
     card.innerHTML = `
       <div class="record-header">
         <span class="record-date">${record.date}</span>
@@ -75,7 +73,7 @@ savedRecords.forEach((record, index) => {
           <div>${record.distanceBack}: ${backEndsText}</div>
         </div>
         <div class="record-buttons">
-          <button class="btn-export-sheet" title="スプレッドシートへコピー" onclick="copyToClipboard(${index})"></button>
+          <button class="btn-export-sheet" title="スプレッドシートへ送信" onclick="sendToSpreadsheet(${index})"></button>
           <button class="btn-delete-record" title="記録を削除" onclick="deleteRecord(${index})"></button>
         </div>
       </div>
@@ -221,95 +219,63 @@ document.addEventListener('DOMContentLoaded', () => {
   showScreen('top-screen');
 });
 
-/**
- * スプレッドシート用に、エンドごとの合計を「配列」として計算する関数
- */
-function calculateEndTotalsArray(tabScores) {
-  if (!tabScores) return ['', '', '', '', '', ''];
-  let endTotals = [];
-  for (let end = 0; end < 6; end++) {
-    let sum = 0;
-    let hasInput = false;
-    for (let shot = 0; shot < 6; shot++) {
-      let val = tabScores[end * 6 + shot];
-      if (val !== null) {
-        hasInput = true;
-        if (val === 'X') sum += 10;
-        else if (val === 'M') sum += 0;
-        else sum += parseInt(val, 10);
-      }
-    }
-    // 未入力の場合は空文字（スプレッドシートで空欄になる）
-    endTotals.push(hasInput ? sum : '');
-  }
-  return endTotals;
-}
 
-/**
- * ボタンが押された時、指定された記録をスプレッドシート形式でクリップボードにコピーする
- */
-function copyToClipboard(index) {
+
+function sendToSpreadsheet(index) {
+  // ★ここにGASのウェブアプリURLを貼り付け★
+  const gasUrl = "https://script.google.com/macros/s/AKfycbwAMUXqQwjTyYvDlUkRJ2ic11s-C4Bgro9nJeOqiz7KKEBskZA7qv6brBS3ATXYuBjI/exec";
+
   let savedRecords = JSON.parse(localStorage.getItem('archery_records')) || [];
   let record = savedRecords[index];
   if (!record) return;
 
-  // 距離の「m」を取り除いて数字だけにする ("50m" -> "50")
+  // シート番号を入力させるポップアップを表示
+  const sheetNumInput = prompt('送信先のシート番号を入力してください\n（例：一番左のシートなら 1）', '1');
+  
+  // キャンセルが押された場合、または空欄の場合は送信を中止
+  if (!sheetNumInput) {
+    return; 
+  }
+
+  // 送信するデータの準備
   const frontDist = record.distanceFront.replace('m', '');
   const backDist = record.distanceBack.replace('m', '');
-
-  // 各エンドの合計点配列を取得
   const frontTotals = calculateEndTotalsArray(record.scores ? record.scores[0] : null);
   const backTotals = calculateEndTotalsArray(record.scores ? record.scores[1] : null);
 
-  // 通常のセルのデザイン（四方すべてに枠線）
-  const tdStyle = "border: 1px solid #000000; text-align: center; width: 60px;";
-  
-  // 距離の数字用（上1px、右0px、下1px、左1px の枠線）
-  const tdStyleNum = "border-style: solid; border-color: #000000; border-width: 1px 0px 1px 1px; text-align: center; width: 60px;";
-  
-  // 単位の「m」用（上1px、右1px、下1px、左0px の枠線）
-  const tdStyleUnit = "border-style: solid; border-color: #000000; border-width: 1px 1px 1px 0px; text-align: center; width: 60px;";
+  // 入力されたシート番号（sheetNumber）を追加
+  const payload = {
+    sheetNumber: sheetNumInput,
+    date: record.date,
+    frontDist: frontDist,
+    backDist: backDist,
+    frontTotals: frontTotals,
+    backTotals: backTotals
+  };
 
-  // クリップボードに送るHTMLテーブルの作成
-  const html = `
-    <table style="border-collapse: collapse;">
-      <tr>
-        <td style="${tdStyleNum}">${frontDist}</td>
-        <td style="${tdStyleUnit}">m</td>
-        <td style="${tdStyle}">${frontTotals[0]}</td>
-        <td style="${tdStyle}">${frontTotals[1]}</td>
-        <td style="${tdStyle}">${frontTotals[2]}</td>
-        <td style="${tdStyle}">${frontTotals[3]}</td>
-        <td style="${tdStyle}">${frontTotals[4]}</td>
-        <td style="${tdStyle}">${frontTotals[5]}</td>
-      </tr>
-      <tr>
-        <td style="${tdStyleNum}">${backDist}</td>
-        <td style="${tdStyleUnit}">m</td>
-        <td style="${tdStyle}">${backTotals[0]}</td>
-        <td style="${tdStyle}">${backTotals[1]}</td>
-        <td style="${tdStyle}">${backTotals[2]}</td>
-        <td style="${tdStyle}">${backTotals[3]}</td>
-        <td style="${tdStyle}">${backTotals[4]}</td>
-        <td style="${tdStyle}">${backTotals[5]}</td>
-      </tr>
-    </table>
-  `;
+  alert(`シート${sheetNumInput}へ送信しています...\n※少し時間がかかります`);
 
-  // HTMLとしてクリップボードに書き込む
-  if (navigator.clipboard && window.ClipboardItem) {
-    const blob = new Blob([html], { type: 'text/html' });
-    const item = new ClipboardItem({ 'text/html': blob });
-    
-    navigator.clipboard.write([item]).then(() => {
-      alert('クリップボードにコピーしました\nスプレッドシートに貼り付けてください');
-    }).catch(err => {
-      console.error(err);
-      alert('コピーに失敗しました');
-    });
-  } else {
-    alert('お使いのブラウザはコピー機能に対応していません');
-  }
+  // GASへデータを送信
+  fetch(gasUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/plain',
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(response => response.text())
+  .then(text => {
+    // GAS側で空き行が見つからなかった場合などのエラー処理
+    if (text.includes("Error")) {
+      alert(`送信エラー: ${text}\nシートの空き行や番号を確認してください。`);
+    } else {
+      alert('スプレッドシートへの送信が完了しました！');
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    alert('送信に失敗しました。電波状況を確認してください。');
+  });
 }
 
 /**

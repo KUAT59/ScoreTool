@@ -392,7 +392,7 @@ body {
   align-items: center;         /* 縦方向の中央で揃える */
   gap: 10px;                   /* テキストとボタンの間に少し隙間を作る */
   
-  font-size: 12px;
+  font-size: 10px;
   color: #666;
   line-height: 1.6;
   font-family: monospace;
@@ -499,4 +499,15 @@ body {
   border-radius: 1px;
   /* 中心を揃えた上で、右下がりに45度回転 */
   transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.app-version {
+  font-size: 14px;
+  color: #555;
+  font-weight: normal;
+  background-color: #e0e0e0;
+  padding: 4px 10px;
+  border-radius: 12px; /* 丸みを帯びたバッジ風にする */
+  margin-left: 8px;
+  vertical-align: middle; /* タイトルの文字と高さを合わせる */
 }
