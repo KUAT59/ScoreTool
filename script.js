@@ -271,10 +271,13 @@ function sendToSpreadsheet(index) {
   const frontTotals = calculateEndTotalsArray(record.scores ? record.scores[0] : null);
   const backTotals = calculateEndTotalsArray(record.scores ? record.scores[1] : null);
 
+  // 日付("2026/6/6"のような)だけを取り出す
+  const onlyDate = record.date.split(' ')[0];
+
   // 入力されたシート番号（sheetNumber）を追加
   const payload = {
     sheetNumber: sheetNumInput,
-    date: record.date,
+    date: onlyDate,
     frontDist: frontDist,
     backDist: backDist,
     frontTotals: frontTotals,
