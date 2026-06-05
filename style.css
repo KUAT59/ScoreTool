@@ -512,15 +512,14 @@ body {
   vertical-align: middle; /* タイトルの文字と高さを合わせる */
 }
 
-/* --- 送信先シート設定エリア（トップ画面下部） --- */
+/* --- 送信先シート設定エリア（トップ画面上部に移動） --- */
 .sheet-setting-section {
-  padding: 12px 20px;
-  background-color: #f8f9fa;
-  border-top: 1px solid #ccc;
+  padding: 10px 20px;
+  background-color: #f8f9fa; /* ヘッダーと同じ背景色で馴染ませる */
+  border-bottom: 2px solid #ddd; /* ヘッダーの区切り線の代わりに下線を引く */
   display: flex;
   justify-content: center;
   align-items: center;
-  /* 画面の一番下に固定するための設定 */
   flex-shrink: 0; 
 }
 
@@ -528,16 +527,16 @@ body {
   font-weight: bold;
   color: #333;
   margin-right: 8px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .sheet-input {
   width: 60px;
-  font-size: 12px;
+  font-size: 18px;
   padding: 4px;
   border: 1px solid #999;
   border-radius: 4px;
   text-align: center;
   font-weight: bold;
-  color: #1e90ff; /* 青色で目立たせる */
+  color: #1e90ff;
 }

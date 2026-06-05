@@ -251,7 +251,7 @@ function calculateEndTotalsArray(tabScores) {
 
 function sendToSpreadsheet(index) {
   // ★ここにGASのウェブアプリURLを貼り付け★
-  const gasUrl = "https://script.google.com/macros/s/AKfycbwMrjhdb5zdtOJpt-_PKJDrS-9P_Ri1GxSGScRccQ12POxrbBV0kPiI70P0jJh2dN3g/exec";
+  const gasUrl = "https://script.google.com/macros/s/AKfycbwob291RyfF77wmbLf28r_MbX8k4Zt6NEuf2UkmP2BlyykYkDL_NAefAdiNYIdYKhS-yw/exec";
 
   let savedRecords = JSON.parse(localStorage.getItem('archery_records')) || [];
   let record = savedRecords[index];
