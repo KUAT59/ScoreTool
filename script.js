@@ -219,7 +219,29 @@ document.addEventListener('DOMContentLoaded', () => {
   showScreen('top-screen');
 });
 
-
+/**
+ * スプレッドシート用に、エンドごとの合計を「配列」として計算する関数
+ */
+function calculateEndTotalsArray(tabScores) {
+  if (!tabScores) return ['', '', '', '', '', ''];
+  let endTotals = [];
+  for (let end = 0; end < 6; end++) {
+    let sum = 0;
+    let hasInput = false;
+    for (let shot = 0; shot < 6; shot++) {
+      let val = tabScores[end * 6 + shot];
+      if (val !== null) {
+        hasInput = true;
+        if (val === 'X') sum += 10;
+        else if (val === 'M') sum += 0;
+        else sum += parseInt(val, 10);
+      }
+    }
+    // 未入力の場合は空文字（スプレッドシートで空欄になる）
+    endTotals.push(hasInput ? sum : '');
+  }
+  return endTotals;
+}
 
 function sendToSpreadsheet(index) {
   // ★ここにGASのウェブアプリURLを貼り付け★
