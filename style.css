@@ -511,3 +511,33 @@ body {
   margin-left: 8px;
   vertical-align: middle; /* タイトルの文字と高さを合わせる */
 }
+
+/* --- 送信先シート設定エリア（トップ画面下部） --- */
+.sheet-setting-section {
+  padding: 12px 20px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 画面の一番下に固定するための設定 */
+  flex-shrink: 0; 
+}
+
+.sheet-setting-section label {
+  font-weight: bold;
+  color: #333;
+  margin-right: 8px;
+  font-size: 12px;
+}
+
+.sheet-input {
+  width: 60px;
+  font-size: 12px;
+  padding: 4px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  color: #1e90ff; /* 青色で目立たせる */
+}

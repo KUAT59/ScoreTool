@@ -213,6 +213,11 @@ document.addEventListener('DOMContentLoaded', () => {
   distanceSelect.addEventListener('change', () => {
     selectedDistances[currentTab] = distanceSelect.value;
   });
+  //追記
+  const sheetInput = document.getElementById('target-sheet');
+  sheetInput.value = localStorage.getItem('archery_target_sheet') || ''; 
+  sheetInput.addEventListener('change', () => localStorage.setItem('archery_target_sheet', sheetInput.value)); // 変更されたら記憶する
+  //追記ここまで
 
   // アプリ起動時はトップ画面を表示する
   renderTopScreen();
@@ -243,19 +248,20 @@ function calculateEndTotalsArray(tabScores) {
   return endTotals;
 }
 
+
 function sendToSpreadsheet(index) {
   // ★ここにGASのウェブアプリURLを貼り付け★
-  const gasUrl = "https://script.google.com/macros/s/AKfycbwAMUXqQwjTyYvDlUkRJ2ic11s-C4Bgro9nJeOqiz7KKEBskZA7qv6brBS3ATXYuBjI/exec";
+  const gasUrl = "https://script.google.com/macros/s/AKfycbwMrjhdb5zdtOJpt-_PKJDrS-9P_Ri1GxSGScRccQ12POxrbBV0kPiI70P0jJh2dN3g/exec";
 
   let savedRecords = JSON.parse(localStorage.getItem('archery_records')) || [];
   let record = savedRecords[index];
   if (!record) return;
 
-  // シート番号を入力させるポップアップを表示
-  const sheetNumInput = prompt('送信先のシート番号を入力してください\n（例：一番左のシートなら 1）', '1');
+  // 画面下部の入力欄からシート番号を取得する
+  const sheetNumInput = document.getElementById('target-sheet').value;
   
-  // キャンセルが押された場合、または空欄の場合は送信を中止
   if (!sheetNumInput) {
+    alert("シート番号が設定されていません。");
     return; 
   }
 
@@ -275,9 +281,7 @@ function sendToSpreadsheet(index) {
     backTotals: backTotals
   };
 
-  alert(`シート${sheetNumInput}へ送信しています...\n※少し時間がかかります`);
-
-  // GASへデータを送信
+  // GASへデータを送信（裏側で非同期に処理）
   fetch(gasUrl, {
     method: 'POST',
     headers: {
@@ -287,17 +291,17 @@ function sendToSpreadsheet(index) {
   })
   .then(response => response.text())
   .then(text => {
-    // GAS側で空き行が見つからなかった場合などのエラー処理
+    // GAS側で空き行が見つからなかった場合などのエラー処理（後から通知）
     if (text.includes("Error")) {
       alert(`送信エラー: ${text}\nシートの空き行や番号を確認してください。`);
-    } else {
-      alert('スプレッドシートへの送信が完了しました！');
     }
   })
   .catch(error => {
-    console.error(error);
-    alert('送信に失敗しました。電波状況を確認してください。');
+    console.error('送信エラー:', error);
   });
+
+  // 完了メッセージ
+  alert(`シート${sheetNumInput}へスコアを送信しました\n※反映には時間がかかることがあります`);
 }
 
 /**
